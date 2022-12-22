@@ -5,16 +5,18 @@
 this task is a part of the alx-interview preparation
 """
 
+
 def pascal_triangle(n):
-    
+
     """
     args:
         n -> int
-             
+
     description:
         this returns a triangle of height (n+1) and base width of (n+1)
-        this is a programmatc implementation of the Pascal triangle in ```Binomial expansion```
-    """
+        this is a programmatc implementation of the Pascal
+        triangle in ```Binomial expansion```
+   """
 
     result = []
 
@@ -31,16 +33,13 @@ def pascal_triangle(n):
                 temp = []
                 temp.append(1)
                 for j in range(len(result[-1]) - 1):
-                    #print(result[-1][j], result[-1][j+1])
                     temp.append(result[-1][j] + result[-1][j+1])
                 temp.append(1)
                 result.append(temp)
     return result
 
 
-
 def main():
-    #n = int(input("enter value for n\n>>"))
     n = 6
     print([row for row in pascal_triangle(n)])
 
