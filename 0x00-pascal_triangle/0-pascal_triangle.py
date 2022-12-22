@@ -18,11 +18,11 @@ def pascal_triangle(n):
 
     result = []
 
-    if n < 0:
+    if n <= 0:
         return result
 
-    elif n >= 0:
-        for i in range(n+1):
+    elif n >= 1:
+        for i in range(n):
             if i == 0:
                 result.append([1])
             elif i == 1:
