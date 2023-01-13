@@ -11,14 +11,10 @@ def minOperations(n):
 
     return -> int
     """
-    if n <= 0:
-        return 0
-    operations = 0
-    i = 2
-    while i <= n:
-        operations += 1
-        if n % i == 0:
-            n = n / i
-        else:
-            i += 1
-    return operations
+    ops = [0]*n
+    ops[0] = 1
+    for i in range(1, n):
+        ops[i] = ops[i-1] + 1
+        if i % 2 != 0:
+            ops[i] = min(ops[i], ops[i // 2] + 1)
+    return ops[-1]
