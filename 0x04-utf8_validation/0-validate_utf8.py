@@ -3,32 +3,27 @@
 from typing import List
 
 
-def validUTF8(data: List[int]) -> bool:
-    # a list to store binary representation of the numbers
-    sequence = []
-    # get binary representation of all the numbers
-    for d in data:
-        sequence.append("{0:08b}".format(d))
+def validUTF8(data):
+    """
+    args:
+        Data -> a list of integers
+    Return -> True if data is a valid UTF-8
+                encoding, else return False
+    """
+    byte_count = 0
 
-    i = 0
-    n = len(sequence)
-    while i < n:
-        if sequence[i][0] == '0':  # 1-byte check
-            i += 1
-            continue
-        if sequence[i][:3] == '110' and n-i >= 1:  # 2-byte check
-            if sequence[i+1][:2] == '10':
-                i += 2
-                continue
-        if sequence[i][:4] == '1110' and n-i >= 2:  # 3-byte check
-            if sequence[i+1][:2] == '10' and sequence[i+2][:2] == '10':
-                i += 3
-                continue
-        if sequence[i][:5] == '11110' and n-i >= 3:  # 4-byte check
-            if sequence[i+1][:2] == '10' and sequence[i+2][:2] == '10' \
-               and sequence[i+3][:2] == '10':
-                i += 4
-                continue
+    for i in data:
+        if byte_count == 0:
+            if i >> 5 == 0b110 or i >> 5 == 0b1110:
+                byte_count = 1
+            elif i >> 4 == 0b1110:
+                byte_count = 2
+            elif i >> 3 == 0b11110:
+                byte_count = 3
+            elif i >> 7 == 0b1:
+                return False
         else:
-            return False
-    return True
+            if i >> 6 != 0b10:
+                return False
+            byte_count -= 1
+    return byte_count == 0
