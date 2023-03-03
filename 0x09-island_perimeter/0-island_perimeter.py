@@ -5,20 +5,38 @@ island perimeter calculator
 
 
 def island_perimeter(grid):
+    """
+    base calculator for perimeter
+    """
+    # Check if grid is empty
+    if not grid:
+        return 0
+
+    # Check if grid is rectangular and within size limits
+    height = len(grid)
+    width = len(grid[0])
+    if not all(len(row) == width for row in grid) or height > 100 \
+            or width > 100:
+        raise ValueError("Grid is not rectangular or exceeds size limits")
+
     # Find the first land cell
-    for i in range(len(grid)):
-        for j in range(len(grid[0])):
+    for i in range(height):
+        for j in range(width):
             if grid[i][j] == 1:
                 # Use DFS to find the island and its perimeter
                 return dfs(i, j, grid)
 
 
 def dfs(i, j, grid):
-    # Base case: cell is out of bounds or is water
+    """
+    Depth first Search implementation
+    """
+    # Check if cell is out of bounds or is water
     if i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]) \
             or grid[i][j] == 0:
         return 1
-    # Base case: cell is already visited
+
+    # Check if cell is already visited
     if grid[i][j] == -1:
         return 0
 
